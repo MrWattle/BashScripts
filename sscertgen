@@ -1,0 +1,22 @@
+#!/bin/bash
+
+DIR="build"
+KEY="$DIR/key.pem"
+CERT="$DIR/cert.pem" 
+
+mkdir -p "$DIR"
+
+#Create a self-signed certificate
+if [ $# -eq 0 ]
+then
+  openssl req \
+    -x509 -nodes -days 365 \
+    -subj '/CN=www.test-sscert1.com/O=CompanyName, Inc./OU=TLS/C=UA/L=Dnipro' \
+    -newkey rsa:4096 -keyout "$KEY" -out "$CERT" 
+
+#Check new certificate: run test server (https://127.0.0.1:4433/)
+elif [ $1 == "--run-server" ]
+then
+  openssl s_server -cert "$CERT" -www -key "$KEY"
+
+fi

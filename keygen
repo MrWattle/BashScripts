@@ -1,0 +1,12 @@
+#!/bin/bash
+#Generate a key pair
+
+DIR="build"
+
+mkdir -p "$DIR"
+
+#Generate RSA private key, 1024 bit long modulus
+openssl genrsa -out "$DIR/private_key.pem" 1024
+
+#Generate public key
+openssl rsa -in "$DIR/private_key.pem" -out "$DIR/public_key.pem" -outform PEM -pubout

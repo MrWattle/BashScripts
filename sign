@@ -1,0 +1,19 @@
+#!/bin/bash
+
+DIR="build"
+PUB_KEY="$DIR/public_key.pem"
+PRIV_KEY="$DIR/private_key.pem" 
+FILE="msg.txt"
+SIGN="$DIR/sha1.sign"
+
+#Sign FILE with PRIV_KEY using sha1 digest 
+if [ $# -eq 0 ]
+then
+  openssl dgst -sha1 -sign "$PRIV_KEY" -out "$SIGN" "$FILE"
+
+#Verify the SIGN of FILE with PUB_KEY
+elif [ $1 == "-v" ]
+then
+  openssl dgst -sha1 -verify "$PUB_KEY" -signature "$SIGN" "$FILE"
+
+fi

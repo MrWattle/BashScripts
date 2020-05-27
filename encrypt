@@ -1,0 +1,21 @@
+#!/bin/bash
+
+DIR="build"
+PUB_KEY="$DIR/public_key.pem"
+PRIV_KEY="$DIR/private_key.pem" 
+FILE="msg.txt"
+FILE_ENCR="$DIR/msg.dat"
+FILE_DECR="$DIR/msg_decrypted.txt"
+
+
+#Encrypt "$FILE" file with public key
+if [ $# -eq 0 ]
+then
+  openssl rsautl -encrypt -inkey "$PUB_KEY" -pubin -in "$FILE" -out "$FILE_ENCR"
+
+#Decrypt "$FILE" file with private key
+elif [ $1 == "-d" ]
+then
+  openssl rsautl -decrypt -inkey "$PRIV_KEY" -in "$FILE_ENCR" -out "$FILE_DECR"
+
+fi
